@@ -1,0 +1,42 @@
+<svg width="160px" height="136px" viewBox="0 0 160 136" xmlns="http://www.w3.org/2000/svg" >
+    <defs>
+        <linearGradient x1="50%" y1="149.759731%" x2="50%" y2="-18.0434921%" id="linearGradient-1">
+            <stop stop-color="#5689ED" offset="0%"></stop>
+            <stop stop-color="#2B51D7" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="120.708643%" x2="50%" y2="-8.13892724%" id="linearGradient-2">
+            <stop stop-color="#75ABF6" offset="0%"></stop>
+            <stop stop-color="#1043C0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="116.019327%" x2="50%" y2="-20.8638976%" id="linearGradient-3">
+            <stop stop-color="#9AC2FF" offset="0%"></stop>
+            <stop stop-color="#71A3FF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="53.8943225%" y1="-23.400993%" x2="53.8943225%" y2="133.0717%" id="linearGradient-4">
+            <stop stop-color="#0A32A2" offset="0%"></stop>
+            <stop stop-color="#3968E0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="51.0541934%" y1="8.62734394%" x2="63.6918983%" y2="112.052224%" id="linearGradient-5">
+            <stop stop-color="#90C1FF" offset="0%"></stop>
+            <stop stop-color="#799FFF" offset="99.9367775%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="House" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Path-4" fill="url(#linearGradient-1)" points="94.7272727 82.9090909 94.7272727 136 152.727273 123.636364 152.727273 71.2727273"></polygon>
+        <polygon id="Path-3" fill="url(#linearGradient-2)" points="10.9090909 54.5454545 10.9090909 127.272727 94.7272727 136 94.7272727 82.9090909 52.3636364 8"></polygon>
+        <polygon id="Path-5" fill="#1848CB" points="33.4545455 75.6363636 37.8181818 75.6363636 37.8181818 128 33.4545455 129.454545"></polygon>
+        <polygon id="Path-5" fill="url(#linearGradient-3)" points="37.8181818 75.6363636 64 77.0909091 64 130.909091 37.8181818 128"></polygon>
+        <polygon id="Path-6" fill="#1848CB" points="5.09090909 70.5454545 10.9090909 68.3636364 10.9090909 61.8181818"></polygon>
+        <polygon id="Path-2" fill="url(#linearGradient-4)" points="52 6.54545455 0 65.4545455 5.09090909 70.5454545 50.9090909 18.1818182 88.7272727 83.6363636 95.2727273 82.9090909"></polygon>
+        <polygon id="Rectangle-3" fill="url(#linearGradient-5)" points="52 6.54545455 113.454545 0 160 70.5454545 95.2727273 82.9090909"></polygon>
+        <g id="窗子" transform="translate(106.181818, 81.454545)">
+            <polygon id="Path-5-Copy-2" fill="#2F50C1" points="20 5.09090909 34.9090909 1.81818182 34.9090909 22.1818182 20 25.8181818"></polygon>
+            <polygon id="Path-5-Copy-2" fill="#2F50C1" points="1.45454545 9.09090909 18.1818182 5.45454545 18.1818182 26.1818182 1.45454545 30.5454545"></polygon>
+            <polygon id="Path-5-Copy-2" fill="#7FA8FF" points="0 8 36.3636364 0 36.3636364 1.45454545 0 9.45454545"></polygon>
+            <polygon id="Path-5-Copy-2" fill="#7FA8FF" points="0 30.5454545 36.3636364 21.8181818 36.3636364 23.2727273 0 32"></polygon>
+            <polygon id="Path-5-Copy-2" fill="#7FA8FF" points="18.1818182 5.40106952 20 5.09090909 20 25.8181818 18.1818182 26.1818182"></polygon>
+            <polygon id="Path-5-Copy-2" fill="#7FA8FF" points="0 9.45454545 1.45454545 9.09090909 1.45454545 30.1818182 0 30.5454545"></polygon>
+            <polygon id="Path-5-Copy-2" fill="#7FA8FF" points="34.9090909 1.81818182 36.3636364 1.45454545 36.3636364 21.8181818 34.9090909 22.1818182"></polygon>
+        </g>
+    </g>
+</svg>

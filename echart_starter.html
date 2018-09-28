@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="lib/echarts.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+	let myChart = echarts.init(document.getElementById('main'));
+	let option = {
+		title: {
+			text: '储能价格趋势'
+		},
+		tooltip: {},
+		textStyle: {
+			color: '#fff'
+		}
+		xAxis: {
+
+			data: ["前5周期", "前4周期", "前3周期", "前2周期", "前1周期", "最新"]
+		},
+		yAxis: {
+			type: 'value'
+		},
+		series: [{
+			name: '价格',
+			type: 'line',
+			data: [5, 20, 36, 10, 10, 20]
+		}]
+	};
+
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
+</script>
+</body>
+</html>

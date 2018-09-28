@@ -1,0 +1,10 @@
+{
+  "name": "eos_grid",
+  "version": "1.0.0",
+  "dependencies": {
+    "eosjs": "^16.0.8",
+    "express": "^4.16.3",
+    "nodejs-websocket": "^1.7.1",
+    "request": "^2.88.0"
+  }
+}

@@ -1,0 +1,24 @@
+nodeos -e -p eosio --delete-all-blocks
+nodeos -e -p eosio
+
+cleos create account eosio home25 EOS6yExvTiSWy7vgKFt2xtvHA7fSGUKP3TAW3DgtNxB2M8YiZHBs5 EOS6yExvTiSWy7vgKFt2xtvHA7fSGUKP3TAW3DgtNxB2M8YiZHBs5
+
+transfer:   cleos push action operator transfer '[ "home11", "home12", "1.0000 CLEAN", "m" ]' -p home11
+check balance:  cleos get currency balance eosio.token home11
+
+home11,home12,home13,home14,home15,home21,home22,home23,home24,home25
+
+
+
+tyd:
+    PW5JM35wHotCBhpyus96YXC5U4L7NAZn3WsPudaEWMKLhgyRM9FMQ
+    
+    
+    sub:
+    other:
+    5K2ZnQq8d1XmEcQ5xQefx9dXEwdQ9FQtT18t6yYsoncy5RkaUH3
+    EOS6yExvTiSWy7vgKFt2xtvHA7fSGUKP3TAW3DgtNxB2M8YiZHBs5
+    
+    eosio:
+    5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
+    EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV

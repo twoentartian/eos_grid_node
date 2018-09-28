@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" content="text/html">
+    <title>Eos Grid Simulation</title>
+    <script src='lib/vue.js'></script>
+    <script src='lib/echarts.js'></script>
+</head>
+
+
+<body onUnload="pageClose()" background="res/backgroundStar.png" style="background-size: auto">
+
+<style>
+    html, body {
+        width: 1920px;
+        height: 1080px
+    }
+    h1 {
+        font-size: 80%
+    }
+    #rect1 {
+        fill: rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        border-width: 1px;
+        fill-opacity: 40;
+    }
+    #rect2 {
+        fill: rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        border-width: 1px;
+        fill-opacity: 100;
+    }
+
+    #rect3 {
+        fill: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        border-width: 1px;
+        fill-opacity: 10;
+    }
+
+    #path {
+        fill: rgba(255, 255, 255, 1);
+        border: 1px solid #FFFFFF;
+        opacity: 0.3;
+        stroke-width: 2px;
+    }
+
+    #textEnergySourceTypeGrid {
+        position: absolute;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: right;
+        letter-spacing: 0
+    }
+
+    #textEnergySourceTypeSolar {
+        position: absolute;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: right;
+        letter-spacing: 0
+    }
+
+    #textEnergySourceTypeWind {
+        position: absolute;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: right;
+        letter-spacing: 0
+    }
+
+    #textEnergyValueTypeGrid {
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;
+        font-family: DS-Digital-BoldItalic;
+    }
+
+    #textEnergyValueTypeSolar {
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;
+        font-family: DS-Digital-BoldItalic;
+    }
+
+    #textEnergyValueTypeWind {
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;
+        font-family: DS-Digital-BoldItalic;
+    }
+
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" x="0" y="0" id="appSvg"
+     style="position: absolute; left: 0;top: 0;">
+    <!--Grid Outer rect 1-->
+    <!--<rect width="410" height="210" x="60" y="40" rx = "10" ry = "10" id="rect1">
+    </rect>
+    <!--Grid Outer rect 2-->
+    <!--<rect width="390" height="190" x="70" y="50" rx = "10" ry = "10" id="rect2">
+    </rect>
+    <!--Grid Outer rect 3-->
+    <rect width="180" height="150" x="90" y="70" rx="10" ry="10" id="rect3">
+    </rect>
+
+    <!--Solar Outer rect 1-->
+    <!--<rect width="410" height="210" x="510" y="40" rx = "10" ry = "10" id="rect1">
+    </rect>
+    <!--Solar Outer rect 2-->
+    <!--<rect width="390" height="190" x="520" y="50" rx = "10" ry = "10" id="rect2">
+    </rect>
+    <!--Solar Outer rect 3-->
+    <rect width="180" height="150" x="540" y="70" rx="10" ry="10" id="rect3">
+    </rect>
+
+    <!--Wind Outer rect 1-->
+    <!--<rect width="410" height="210" x="960" y="40" rx = "10" ry = "10" id="rect1">
+    </rect>
+    <!--Wind Outer rect 2-->
+    <!--<rect width="390" height="190" x="970" y="50" rx = "10" ry = "10" id="rect2">
+    </rect>
+    <!--Wind Outer rect 3-->
+    <rect width="180" height="150" x="990" y="70" rx="10" ry="10" id="rect3">
+    </rect>
+
+    <!--Battery 0 level-->
+    <rect width="40" height="70" x="195" y="431" opacity="50%" rx="2" ry="2"
+          style="fill:rgba(255,255,255,0.5);border-radius: 2px">
+    </rect>
+
+    <!--Background right-->
+    <rect width="450" height="1000" x="1410" y="40" opacity="60%" rx="10" ry="10"
+          style="fill:rgba(255,255,255,0.06);border-radius: 10px">
+    </rect>
+
+    <!--Path-->
+    <path d="M259 250 M259 356 M261 356 M261 250 M259 250 Z" id="path" style="border: 1px solid #FFFFFF">
+
+    </path>
+
+
+</svg>
+
+<div>
+    <p style="left: 350px;top: 80px;width: 80px;height: 28px;" id="textEnergySourceTypeGrid">
+        公共电网
+    </p>
+
+    <p style="left: 820px;top: 80px;width: 60px;height: 28px;" id="textEnergySourceTypeSolar">
+        太阳能
+    </p>
+
+    <p style="left: 1290px;top: 80px;width: 40px;height: 28px;" id="textEnergySourceTypeWind">
+        风能
+    </p>
+
+    <p style="left: 313px; top: 120px; width: 117px;height: 36px;" id="textEnergyValueTypeGrid">
+        2000.00
+    </p>
+
+    <p style="left: 760px; top: 120px; width: 117px;height: 36px;" id="textEnergyValueTypeSolar">
+        1520.00
+    </p>
+
+    <p style="left: 1210px; top: 120px; width: 117px;height: 36px;" id="textEnergyValueTypeWind">
+        1100.50
+    </p>
+
+    <!--House readings-->
+    <p style="left: 261px; top: 713px; width: 48px;height: 24px;
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;">
+        20.10
+    </p>
+    <p style="left: 477px; top: 663px; width: 48px;height: 24px;
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;">
+        30.10
+    </p>
+    <p style="left: 681px; top: 742px; width: 48px;height: 24px;
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;">
+        25.10
+    </p>
+    <p style="left: 888px; top: 662px; width: 48px;height: 24px;
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;">
+        22.10
+    </p>
+    <p style="left: 1096px; top: 713px; width: 48px;height: 24px;
+        position: absolute;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 1);
+        text-align: right;
+        letter-spacing: 0;">
+        26.10
+    </p>
+
+</div>
+
+
+<!--Grid rect-->
+<img src="res/backgroundRect.png" width="412" height="211"
+     style="position: absolute; left: 60px; top: 40px; opacity: 40%">
+
+<!--Solar rect-->
+<img src="res/backgroundRect.png" width="412" height="211"
+     style="position: absolute; left: 510px; top: 40px; opacity: 40%">
+
+<!--Wind rect-->
+<img src="res/backgroundRect.png" width="412" height="211"
+     style="position: absolute; left: 960px; top: 40px; opacity: 40%">
+
+<!--Grid-->
+<img src="res/grid.svg" width="60" height="120" style="position: absolute; left: 150px; top: 85px; opacity: 60%">
+
+<!--Solar-->
+<img src="res/solar.svg" width="120" height="95" style="position: absolute; left: 570px; top: 98px; opacity: 60%">
+
+<!--Wind-->
+<img src="res/wind.svg" width="118" height="104" style="position: absolute; left: 1021px; top: 94px; opacity: 60%">
+
+<!--Battery 0-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 190px; top: 418px; opacity: 50%">
+
+<!--Battery 1-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 280px; top: 418px; opacity: 50%">
+
+<!--Battery 2-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 370px; top: 418px; opacity: 50%">
+
+<!--Battery 3-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 460px; top: 418px; opacity: 50%">
+
+<!--Battery 4-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 550px; top: 418px; opacity: 50%">
+
+<!--Battery 5-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 640px; top: 418px; opacity: 50%">
+
+<!--Battery 6 (solar)-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 870px; top: 418px; opacity: 50%">
+
+<!--Battery 7 (solar)-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 960px; top: 418px; opacity: 50%">
+
+<!--Battery 8 (wind)-->
+<img src="res/battery.svg" width="50" height="88" style="position: absolute; left: 1190px; top: 418px; opacity: 50%">
+
+<!--Background Battery-->
+<img src="res/backgroundBattery.png" width="1312" height="151"
+     style="position: absolute; left: 60px; top: 450px; opacity: 100%">
+
+<!--Background House-->
+<img src="res/backgroundEclipse.png" width="1312" height="320"
+     style="position: absolute; left: 60px; top: 760px; opacity: 50%">
+
+<!--House 1-->
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 205px; top: 808px;">
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 165px; top: 907px;">
+
+<!--House 2-->
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 431px; top: 757px;">
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 391px; top: 841px;">
+
+<!--House 3-->
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 625px; top: 837px;">
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 585px; top: 950px;">
+
+<!--House 4-->
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 842px; top: 757px;">
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 802px; top: 841px;">
+
+<!--House 5-->
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 1040px; top: 808px;">
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 1000px; top: 907px;">
+
+
+<div id="appDiv" data-ratio="16:9" style="position: center;width: auto">
+    <h1>{{rawData}}</h1>
+</div>
+
+<div id="echart" style="width: 390px;height:250px;color: #FFFFFF;position: absolute ;left: 1440px; top: 348px;">
+
+</div>
+
+<table style="width: 390px; height: 250px;position: absolute;left: 1460px;top: 707px; color: rgba(255,255,255,0.6)">
+    <tr>
+        <td>用户</td>
+        <td>购买量</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户1</td>
+        <td>1</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户2</td>
+        <td>2</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户3</td>
+        <td>3</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户4</td>
+        <td>4</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户5</td>
+        <td>5</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户6</td>
+        <td>6</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+    <tr>
+        <td>用户7</td>
+        <td>7</td>
+        <td>价格</td>
+        <td>时间</td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+	let myChart = echarts.init(document.getElementById('echart'));
+	let option = {
+		title: {
+			text: '储能价格趋势',
+            textStyle: {
+				color: 'rgba(255,255,255,1)'
+            }
+		},
+		tooltip: {},
+		textStyle: {
+			color: 'rgba(255,255,255,1)'
+		},
+		xAxis: {
+			data: ["前5周期", "前4周期", "前3周期", "前2周期", "前1周期", "最新"],
+		},
+		yAxis: {
+			type: 'value',
+		},
+		series: [{
+			name: '价格',
+			type: 'line',
+			data: [5, 20, 36, 10, 10, 20]
+		}]
+	};
+
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
+
+
+	let dataSocket = undefined;
+
+	function pageClose() {
+		dataSocket.close();
+	}
+
+	let webSocketAddress = 'ws://127.0.0.1:5556';
+	var message = 'Connecting:  ' + webSocketAddress;
+
+	if ("WebSocket" in window) {
+		dataSocket = new WebSocket(webSocketAddress);
+		dataSocket.onopen = function () {
+			let requireDataIntervalId = setInterval(function () {
+				if (dataSocket.readyState === 1) {
+					let command = {};
+					command['type'] = 'require';
+					command['content'] = undefined;
+					dataSocket.send(JSON.stringify(command));
+				}
+			}, 500);
+		};
+		dataSocket.onmessage = function (event) {
+			vm.rawData = event.data;
+		};
+		dataSocket.onclose = function () {
+			vm.rawData = 'Closed';
+		}
+	}
+	else {
+		alert("Your browser does not support WebSocket");
+	}
+
+	var vm = new Vue({
+		el: '#appSvg',
+		data: {
+			battery_level_px: 10,
+		}
+	});
+
+</script>
+
+</body>
+</html>
