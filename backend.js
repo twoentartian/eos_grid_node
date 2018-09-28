@@ -319,22 +319,45 @@ let Home = {
 };
 
 // Create local server to deliver community information
-
-
 let CreateServer = function (port) {
 	let server = websocket.createServer(function (conn) {
 		// Command Map
 		let wsCommandMap = {};
-		wsCommandMap['require'] = function(content){
-
+		wsCommandMap['require'] = function(conn, commandReceived){
+			// Send JSON
+			commandReceived['result'] = Simulator.getInstance();
+			conn.sendText(JSON.stringify(commandReceived));
 		};
+		wsCommandMap['changePrice'] = function(conn, commandReceived){
+			// Change price
+			let items = commandReceived.content.split(' ');
+			try {
+				Simulator.getInstance().market.AddUserPrice(Simulator.getInstance().community.idHomeMap.get(items[0]),Number(items[1]));
+				commandReceived['result'] = 'ok';
+			}
+			catch (err) {
+				commandReceived['result'] = 'fail';
+			}
+			conn.sendText(JSON.stringify(commandReceived));
+		};
+		wsCommandMap['chargeFossil'] = function(conn, commandReceived){
+			// Charge fossil
+			let items = commandReceived.content.split(' ');
+			try {
+				Simulator.getInstance().community.idHomeMap.get(items[0]).topUpEnergy(Number(items[1]),'fossil');
+				commandReceived['result'] = 'ok';
+			}
+			catch (err) {
+				commandReceived['result'] = 'fail';
+			}
+			conn.sendText(JSON.stringify(commandReceived));
+		};
+
 
 		console.log('Connected');
 		conn.on("text", function (str) {
-			let commandReceived = JSON.parse()
-
-			// Send JSON
-			conn.sendText(JSON.stringify(Simulator.getInstance()));
+			let commandReceived = JSON.parse(str);
+			wsCommandMap[commandReceived.type](conn, commandReceived);
 		});
 		conn.on("close", function (code, reason) {
 			console.log('Closed');

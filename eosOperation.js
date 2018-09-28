@@ -12,10 +12,10 @@ let memoTransfer = undefined;
 let firstRun = true;
 
 let transfer = function (from, to, quantity, memo) {
-	if (process.platform === 'win32') {
+	if (process.platform === 'win32' || process.platform === 'darwin') {
 		if (firstRun){
 			firstRun = false;
-			console.log('EOS interaction is rejected due to win32 platform');
+			console.log('EOS interaction is rejected due to win32/darwin platform');
 		}
 		return;
 	}

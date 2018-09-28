@@ -15,9 +15,6 @@
         width: 1920px;
         height: 1080px
     }
-    h1 {
-        font-size: 80%
-    }
     #rect1 {
         fill: rgba(255, 255, 255, 0.06);
         border-radius: 10px;
@@ -295,7 +292,7 @@
 <img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 1000px; top: 907px;">
 
 
-<div id="appDiv" data-ratio="16:9" style="position: center;width: auto">
+<div id="appDiv" style="position: absolute;left: 0;top: 1080px;">
     <h1>{{rawData}}</h1>
 </div>
 
@@ -400,13 +397,21 @@
 				if (dataSocket.readyState === 1) {
 					let command = {};
 					command['type'] = 'require';
-					command['content'] = undefined;
+					command['content'] = '';
 					dataSocket.send(JSON.stringify(command));
+
+					//TEST
+					//command['type'] = 'changePrice';
+					//command['content'] = 'home11 91';
+					//dataSocket.send(JSON.stringify(command));
 				}
 			}, 500);
 		};
 		dataSocket.onmessage = function (event) {
-			vm.rawData = event.data;
+			let obj = JSON.parse(event.data);
+			if (obj.type === 'changePrice') {
+				vm.rawData = event.data;
+			}
 		};
 		dataSocket.onclose = function () {
 			vm.rawData = 'Closed';
@@ -417,9 +422,9 @@
 	}
 
 	var vm = new Vue({
-		el: '#appSvg',
+		el: '#appDiv',
 		data: {
-			battery_level_px: 10,
+			rawData: message,
 		}
 	});
 
