@@ -18,12 +18,9 @@ let Simulator = {
 		// Community targets
 		instance.community = Community.createNew();
 		for (let i = 0; i < numberHome; i++) {
-			let tempHome = Home.createNew('User' + i, 'UserId' + i, 'MeterId' + i, i + 1);
+			let tempHome = Home.createNew('User' + i, 'UserId' + i, 'MeterId' + i, 20);
 			instance.community.idHomeMap.set(tempHome.identification.id, tempHome);
 			instance.community.homes[tempHome.identification.id] = tempHome;
-		}
-		for (let [id, home] of instance.community.idHomeMap) {
-			instance.market.AddUserPrice(home, 9 + Math.random().toFixed(2));
 		}
 		instance.community.grid[0] = Grid.createNew('grid', 'grid0', 'gridMeter0', 400);
 		instance.community.generator[0] = Generator.createNew('solar', 'solar0', 'solarMeter0', 100);
@@ -56,12 +53,19 @@ let Simulator = {
 				generator.generateEnergy(instance.community.battery[0]);
 			});
 
+			// Random Auction price
+			for (let [id, home] of instance.community.idHomeMap) {
+				instance.market.AddUserPrice(home, 9 + Math.random().toFixed(2));
+			}
+
 			// Auction
 			let energy = 0;
 			instance.community.generator.forEach(function (generator) {
 				energy += generator.meter.reading - generator.meter.previousReading;
 			});
 			instance.market.SellEnergy(energy);
+
+
 
 			//setTimeout(instance.tickFunc2, 600);
 		};
@@ -104,6 +108,7 @@ let Community = {
 let Market = {
 	createNew: function () {
 		let market = {};
+		market.latestSell = {};
 		market.userPriceMap = new Map();
 		market.userPriceMap_JsonUse = Object.create(null);
 		market.AddUserPrice = function (userId, price) {
@@ -125,11 +130,15 @@ let Market = {
 			if (highestUser === undefined) {
 				throw 'No user';
 			}
+			this.latestSell['user'] = highestUser.identification.id;
+			this.latestSell['price'] = highestPrice;
+			this.latestSell['amount'] = energy;
+
 			highestUser.topUpEnergy(energy, 'clean');
 		};
 		market.RefreshId = function () {
 			this.userPriceMap_JsonUse = {};
-			for (let [user, price] of this.userPriceMap) {
+			for (let [user, price] of this.userPriceMap.entries()) {
 				this.userPriceMap_JsonUse[user.identification.id] = price;
 			}
 		};
@@ -207,6 +216,7 @@ let Battery = {
 		battery.identification = TargetIdentification.createNew(name, id);
 		battery.capacity = capacity;
 		battery.energy = 0;
+		battery.cleanEnergy = 0;
 		battery.ratio = battery.energy / battery.capacity;
 		battery.chargeLowThres = chargeLowThreshold;
 		battery.chargeHighThres = chargeHighThreshold;
@@ -305,10 +315,10 @@ let Home = {
 		home.setSwitch = function (state) {
 			this.state = state;
 			if (this.state === true) {
-				console.log(home.identification.name + ' switch on');
+				console.log(home.identification.id + ' switch on');
 			}
 			else if (this.state === false) {
-				console.log(home.identification.name + ' switch off');
+				console.log(home.identification.id + ' switch off');
 			}
 			else {
 				throw 'Not Implemented';

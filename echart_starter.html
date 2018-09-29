@@ -1,40 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>ECharts</title>
-    <!-- 引入 echarts.js -->
-    <script src="lib/echarts.js"></script>
+	<meta charset="UTF-8">
+	<script src="lib/echarts.js"></script>
+	<title>圆环进度条</title>
 </head>
 <body>
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 600px;height:400px;"></div>
-<script type="text/javascript">
-	let myChart = echarts.init(document.getElementById('main'));
-	let option = {
-		title: {
-			text: '储能价格趋势'
-		},
-		tooltip: {},
-		textStyle: {
-			color: '#fff'
-		}
-		xAxis: {
-
-			data: ["前5周期", "前4周期", "前3周期", "前2周期", "前1周期", "最新"]
-		},
-		yAxis: {
-			type: 'value'
-		},
-		series: [{
-			name: '价格',
-			type: 'line',
-			data: [5, 20, 36, 10, 10, 20]
-		}]
-	};
-
-	// 使用刚指定的配置项和数据显示图表。
-	myChart.setOption(option);
-</script>
+<div id="pie" style="width: 600px;height:400px;">
 </body>
+<script type="text/javascript">
+	//柱状图
+	var asd =document.getElementById('pie');
+	var pieChart = echarts.init(asd);
+	var labelTop = {//上层样式
+		normal : {
+			color :'#FF8E3D',
+			label : {
+				show : true,
+				position : 'center',
+				formatter : '{b}',
+				textStyle: {
+					baseline : 'bottom',
+					fontSize:26
+				}
+			},
+			labelLine : {
+				show : false
+			}
+		}
+	};
+	var labelFromatter = {//环内样式
+		normal : {//默认样式
+			label : {//标签
+				formatter : function (a,b,c){return 100 - c + '%'},
+				// labelLine.length：30,  //线长，从外边缘起计算，可为负值
+				textStyle: {//标签文本样式
+					color:'black',
+					align :'center',
+					baseline : 'top'//垂直对其方式
+				}
+			}
+		},
+	};
+	var labelBottom = {//底层样式
+		normal : {
+			color: '#99ccff',
+			label : {
+				show : true,
+				position : 'center',
+				fontSize:22
+			},
+			labelLine : {
+				show : false
+			}
+		},
+		emphasis: {//悬浮式样式
+			color: 'rgba( 0,0,0,0)'
+		}
+	};
+	var radius = [80,122];// 半径[内半径，外半径]
+
+	var pieChartOption = {
+		animation:false,
+		tooltip : {         // 提示框. Can be overwrited by series or data
+			trigger: 'axis',
+			//show: true,   //default true
+			showDelay: 0,
+			hideDelay: 50,
+			transitionDuration:0,
+			borderRadius : 8,
+			borderWidth: 2,
+			padding: 10,    // [5, 10, 15, 20]
+		},
+		series : [
+			{
+				type : 'pie',
+				center : ['50%', '50%'],//圆心坐标（div中的%比例）
+				radius : radius,//半径
+				x: '0%', // for funnel
+				itemStyle : labelTop,//graphStyleA,//图形样式 // 当查到的数据不存在（并非为0），此属性隐藏
+				data : [
+					{name:'电池电量剩余', value:79,itemStyle : labelTop},
+					{name:'79%', value:21, itemStyle : labelBottom}
+				]
+			}
+		]
+	};
+	pieChart.setOption(pieChartOption);
+</script>
 </html>

@@ -19,10 +19,11 @@ if (module === require.main) {
 	simulator0.ChangeUserId('UserId8','home24');
 	simulator0.ChangeUserId('UserId9','home25');
 
-	simulator0.community.generator[0].generateEnergy(simulator0.community.battery[0], 100);
+
+	//simulator0.community.generator[0].generateEnergy(simulator0.community.battery[0], 100);
 	for (let [id, home] of simulator0.community.idHomeMap) {
-		home.topUpEnergy(10, 'clean');
-		home.topUpEnergy(10, 'fossil');
+		home.topUpEnergy(100, 'clean');
+		home.topUpEnergy(100, 'fossil');
 	}
 
 	simulator0.StartTimer();
