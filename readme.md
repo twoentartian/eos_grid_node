@@ -1,4 +1,5 @@
-##A small EOS blockchain demo & energy grid.
+#A small EOS blockchain demo & energy grid.
+
 EOS github: [EOS](https://github.com/EOSIO/eos)
 
 Keywords:
