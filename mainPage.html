@@ -364,58 +364,58 @@
      style="position: absolute; left: 60px; top: 760px; opacity: 50%">
 
 <!--Circle battery 0-->
-<img src="res/circle.svg" width="10" height="10"
-     style="position: absolute; left: 210px; top: 398px; opacity: 50%;">
+<img src="res/circle.png" width="10" height="10"
+     style="position: absolute; left: 210px; top: 398px; opacity: 50%; color: #FFFFFF;">
 
 <!--Circle battery 1-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 300px; top: 398px; opacity: 50%">
 
 <!--Circle battery 2-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 390px; top: 398px; opacity: 50%">
 
 <!--Circle battery 3-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 480px; top: 398px; opacity: 50%">
 
 <!--Circle battery 4-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 570px; top: 398px; opacity: 50%">
 
 <!--Circle battery 5-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 660px; top: 398px; opacity: 50%">
 
 <!--Circle battery 6-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 890px; top: 398px; opacity: 50%">
 
 <!--Circle battery 7-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 980px; top: 398px; opacity: 50%">
 
 <!--Circle battery 8-->
-<img src="res/circle.svg" width="10" height="10"
+<img src="res/circle.png" width="10" height="10"
      style="position: absolute; left: 1210px; top: 398px; opacity: 50%">
 
-<!--Circle home 0-->
+<!--Circle home 0
 <img src="res/circle.svg" width="10" height="10"
      style="position: absolute; left: 294px; top: 731px; opacity: 50%">
 
-<!--Circle home 1-->
+<!--Circle home 1
 <img src="res/circle.svg" width="10" height="10"
      style="position: absolute; left: 505px; top: 683px; opacity: 50%">
 
-<!--Circle home 2-->
+<!--Circle home 2
 <img src="res/circle.svg" width="10" height="10"
      style="position: absolute; left: 709px; top: 760px; opacity: 50%">
 
-<!--Circle home 3-->
+<!--Circle home 3
 <img src="res/circle.svg" width="10" height="10"
      style="position: absolute; left: 925px; top: 682px; opacity: 50%">
 
-<!--Circle home 4-->
+<!--Circle home 4
 <img src="res/circle.svg" width="10" height="10"
      style="position: absolute; left: 1125px; top: 733px; opacity: 50%">
 
@@ -770,8 +770,8 @@
 			data: ["前5周期", "前4周期", "前3周期", "前2周期", "前1周期", "最新"],
 		},
 		yAxis: {
-			max: '91',
-			min: '90.4',
+			max: '10',
+			min: '9.4',
 			type: 'value',
 		},
 		legend: {
@@ -783,13 +783,13 @@
 		series: [{
 			name: '太阳能价格',
 			type: 'line',
-			data: [90, 90, 90, 90, 90, 90],
+			data: [9, 9, 9, 9, 9, 9],
 			color: "#FF8E3D",
 			smooth: true,
 		},{
 			name: '风能价格',
 			type: 'line',
-			data: [90, 90, 90, 90, 90, 90],
+			data: [9, 9, 9, 9, 9, 9],
 			color: "#99ccff",
 			smooth: true,
 		}]
@@ -799,7 +799,7 @@
 		//Generate wind energy price
 		let maximumWindPrice = 0;
 		for (let i = 0; i < 10; i++) {
-			let tempPrice = (90+Math.random()).toFixed(2);
+			let tempPrice = 9+Number(Math.random().toFixed(2));
 			if (tempPrice > maximumWindPrice) {
 				maximumWindPrice = tempPrice;
 			}
@@ -812,7 +812,7 @@
 			lineChartoption.series[i].data[4] = lineChartoption.series[i].data[5];
 		}
 		lineChartoption.series[0].data[5] = price;
-		lineChartoption.series[1].data[5] = (maximumWindPrice/2 + price/2).toFixed(2);
+		lineChartoption.series[1].data[5] = Number((maximumWindPrice/2 + price/2).toFixed(2));
 
 		myLineChart.setOption(lineChartoption);
 	}
