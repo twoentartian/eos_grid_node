@@ -22,8 +22,7 @@ if (module === require.main) {
 
 	//simulator0.community.generator[0].generateEnergy(simulator0.community.battery[0], 100);
 	for (let [id, home] of simulator0.community.idHomeMap) {
-		home.topUpEnergy(100, 'clean');
-		home.topUpEnergy(100, 'fossil');
+		home.topUpEnergy(200, 'fossil');
 	}
 
 	simulator0.StartTimer();

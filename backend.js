@@ -22,6 +22,10 @@ let Simulator = {
 			instance.community.idHomeMap.set(tempHome.identification.id, tempHome);
 			instance.community.homes[tempHome.identification.id] = tempHome;
 		}
+		for (let [id, home] of instance.community.idHomeMap) {
+			instance.market.AddUserPrice(home, 9 + (0.5*Math.random()).toFixed(2));
+		}
+
 		instance.community.grid[0] = Grid.createNew('grid', 'grid0', 'gridMeter0', 400);
 		instance.community.generator[0] = Generator.createNew('solar', 'solar0', 'solarMeter0', 100);
 		instance.community.generator[1] = Generator.createNew('wind', 'wind0', 'windMeter0', 50);
@@ -49,14 +53,17 @@ let Simulator = {
 			}
 
 			// Generators charge battery
+			instance.community.generator[0].generationSpeed = Math.round(Number((50+Math.random()*100).toFixed(2)));
+			instance.community.generator[1].generationSpeed = Math.round(Number((25+Math.random()*50).toFixed(2)));
 			instance.community.generator.forEach(function (generator) {
 				generator.generateEnergy(instance.community.battery[0]);
 			});
 
 			// Random Auction price
-			for (let [id, home] of instance.community.idHomeMap) {
-				instance.market.AddUserPrice(home, 9 + Math.random().toFixed(2));
-			}
+			let changedList = ['home21','home22','home23','home24','home25'];
+			changedList.forEach(function (homeId) {
+				instance.market.AddUserPrice(instance.community.homes[homeId], 9 + Math.random().toFixed(2));
+			});
 
 			// Auction
 			let energy = 0;
@@ -64,8 +71,6 @@ let Simulator = {
 				energy += generator.meter.reading - generator.meter.previousReading;
 			});
 			instance.market.SellEnergy(energy);
-
-
 
 			//setTimeout(instance.tickFunc2, 600);
 		};
@@ -111,11 +116,11 @@ let Market = {
 		market.latestSell = {};
 		market.userPriceMap = new Map();
 		market.userPriceMap_JsonUse = Object.create(null);
-		market.AddUserPrice = function (userId, price) {
-			this.userPriceMap.set(userId,price);
+		market.AddUserPrice = function (user, price) {
+			this.userPriceMap.set(user,price);
 			this.userPriceMap_JsonUse = {};
 			for (let [user, price] of this.userPriceMap) {
-				this.userPriceMap_JsonUse[userId] = price;
+				this.userPriceMap_JsonUse[user.identification.id] = price;
 			}
 		};
 		market.SellEnergy = function (energy) {
@@ -180,7 +185,7 @@ let Generator = {
 		generator.meter = Meter.createNew(meterId);
 		generator.generationSpeed = generationSpeed;
 		generator.generateEnergy = function (battery) {
-			let realChargedEnergy = battery.ChargeEnergy(generationSpeed);
+			let realChargedEnergy = battery.ChargeEnergy(this.generationSpeed);
 			this.meter.PassEnergy(realChargedEnergy);
 		};
 		return generator;
@@ -202,7 +207,7 @@ let Grid = {
 				}
 			}
 			if (battery.isInCriticalState) {
-				let realChargedEnergy = battery.ChargeEnergy(generationSpeed);
+				let realChargedEnergy = battery.ChargeEnergy(this.generationSpeed);
 				this.meter.PassEnergy(realChargedEnergy);
 			}
 		};
@@ -344,11 +349,14 @@ let CreateServer = function (port) {
 			try {
 				Simulator.getInstance().market.AddUserPrice(Simulator.getInstance().community.idHomeMap.get(items[0]),Number(items[1]));
 				commandReceived['result'] = 'ok';
+				console.log('ws: ok');
 			}
 			catch (err) {
 				commandReceived['result'] = 'fail';
+				console.log('ws: fail');
 			}
 			conn.sendText(JSON.stringify(commandReceived));
+
 		};
 		wsCommandMap['chargeFossil'] = function(conn, commandReceived){
 			// Charge fossil
@@ -356,9 +364,11 @@ let CreateServer = function (port) {
 			try {
 				Simulator.getInstance().community.idHomeMap.get(items[0]).topUpEnergy(Number(items[1]),'fossil');
 				commandReceived['result'] = 'ok';
+				console.log('ws: ok');
 			}
 			catch (err) {
 				commandReceived['result'] = 'fail';
+				console.log('ws: fail');
 			}
 			conn.sendText(JSON.stringify(commandReceived));
 		};
