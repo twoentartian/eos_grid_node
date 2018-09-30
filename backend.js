@@ -23,7 +23,7 @@ let Simulator = {
 			instance.community.homes[tempHome.identification.id] = tempHome;
 		}
 		for (let [id, home] of instance.community.idHomeMap) {
-			instance.market.AddUserPrice(home, 9 + (0.5*Math.random()).toFixed(2));
+			instance.market.AddUserPrice(home, 9 + Number((0.5*Math.random()).toFixed(2)));
 		}
 
 		instance.community.grid[0] = Grid.createNew('grid', 'grid0', 'gridMeter0', 400);
@@ -62,7 +62,7 @@ let Simulator = {
 			// Random Auction price
 			let changedList = ['home21','home22','home23','home24','home25'];
 			changedList.forEach(function (homeId) {
-				instance.market.AddUserPrice(instance.community.homes[homeId], 9 + Math.random().toFixed(2));
+				instance.market.AddUserPrice(instance.community.homes[homeId], 9 + Number(Math.random().toFixed(2)));
 			});
 
 			// Auction
