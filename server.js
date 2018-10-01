@@ -4,7 +4,7 @@ const expressServer = express();
 const fs = require('fs');
 const url = require('url');
 
-// HTTP Response
+// HTTP Response (obsolete)
 function response(request, response) {
 	let pathname = url.parse(request.url).pathname;
 	
@@ -26,6 +26,7 @@ function response(request, response) {
 	}
 }
 
+//(obsolete)
 function createServerHttp(port) {
 	http.createServer(response).listen(port);
 }
@@ -35,7 +36,7 @@ expressServer.get('/', function (request, response) {
 	var deviceAgent = request.headers['user-agent'].toLowerCase();
 	var agentID = deviceAgent.match(/(iphone|ipod|android)/);
 	if (agentID) {
-		response.writeHead(302, {'Location': './phone.html'});
+		response.writeHead(302, {'Location': './tunnel.html'});
 	}
 	else {
 		response.writeHead(302, {'Location': './mainPage.html'});
