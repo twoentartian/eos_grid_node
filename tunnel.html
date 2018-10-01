@@ -9,6 +9,7 @@
 
 <div id="settingPanelText" style="position: relative;left: auto; top: auto; width: auto; height: auto; font-size: 18px; color: rgba(0,0,0,1); ">
 	<p>
+		状态: {{state}}<br>
 		用户名字: <input type="text" id="inputName" value="home11"><br>
 		购买传统能源: <input type="text" id="inputFossilEnergyCharged" value="" style="opacity: 10%;color: rgba(0,0,0,1)">
 		<button id="buttonCancel" type="button" onclick="clickEventSendOrder()" style="color: rgba(0,0,0,1); opacity: 10%;">发送指令</button>
@@ -22,15 +23,26 @@
 </div>
 
 <script type="text/javascript">
+	let vue = new Vue({
+		el: '#settingPanelText',
+		data: {
+			state: undefined
+		}
+	});
+
 	let dataSocket = undefined;
 	function pageClose() {
 		dataSocket.close();
 	}
 	let webSocketAddress = 'ws://127.0.0.1:5556';
 	if ("WebSocket" in window) {
+		vue.state = '连接成功';
 		dataSocket = new WebSocket(webSocketAddress);
 		dataSocket.onopen = function () {
 
+		};
+		dataSocket.onerror = function() {
+			vue.state = '连接失败';
 		};
 		dataSocket.onmessage = function (event) {
 			let obj = JSON.parse(event.data);
