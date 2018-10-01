@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>手机界面</title>
+    <!--<script src='lib/vue.js'></script>-->
+    <!--<script src='./echarts.min.js'></script>-->
+</head>
+<style>
+    body{
+        background: url("res/backgroundStar.png") no-repeat;
+        background-size:100% ;
+    }
+    .biggerRectangle{
+        border-radius: 10px;
+        width: 33%;
+        height: 150px;
+        margin: auto;
+        /*background: rgba(255,255,255,0.06);*/
+        background: yellow;
+        opacity:1;
+        display: inline-block;
+    }
+    .normalRectangle{
+        position: relative;
+        background: green;
+        /*background: rgba(255,255,255,0.06);*/
+        border-radius: 10px;
+        height: 90%;
+        width:95%;
+        top: 5%;
+        left:2.5%;
+    }
+    .smallerRectangle{
+        position: relative;
+        width:50%;
+        height:80%;
+        /*opacity: 0.1;*/
+        /*background: #FFFFFF;*/
+        background: red;
+        border-radius: 10px;
+        top: 10%;
+        left:5%;
+        display: inline-block;
+    }
+    .topPicture{
+        margin: auto;
+        position: relative;
+
+    }
+    .topText{
+        display: inline-block;
+        position: relative;
+        top:-40px;
+        left:50px;
+        font-size: 20px;
+    }
+    .topData{
+        display: inline-block;
+        position: relative;
+        top:15px;
+        left:10px;
+        font-size: 36px;
+    }
+    .Battery{
+        position: relative;
+        top: 110px;
+        display:inline-block;
+        margin:5%;
+    }
+    .gridBattery{
+        position: relative;
+        display:inline-block;
+        /*background: #000;*/
+        margin:12px;
+        width:40px;
+        height:100px;
+    }
+    #myCanvas{
+        position:absolute;
+        border: 1px solid red;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+    }
+</style>
+<body>
+<div>
+    <div class="biggerRectangle">
+        <div class="normalRectangle">
+
+            <div class="smallerRectangle">
+                <img class="topPicture" style="width:33%;height:75%;left:33%;top:12.5%;" src="res/grid.svg">
+            </div>
+            <div class="topText">公共电网</div>
+            <div class="topData">0</div>
+        </div>
+    </div>
+    <div class="biggerRectangle">
+        <div class="normalRectangle">
+            <div class="smallerRectangle">
+                <img class="topPicture" style="width:80%;height:75%;left:10%;top:12.5%;" src="res/solar.svg">
+            </div>
+            <div class="topText">太阳能</div>
+            <div class="topData">0</div>
+        </div>
+    </div>
+    <div class="biggerRectangle">
+        <div class="normalRectangle">
+            <div class="smallerRectangle">
+                <img class="topPicture" style="width:75%;height:75%;left:12.5%;top:12.5%;" src="res/wind.svg">
+            </div>
+            <div class="topText">风能</div>
+            <div class="topData">0</div>
+        </div>
+    </div>
+</div>
+
+<div class="Battery">
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+</div>
+<div class="Battery" >
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+</div>
+<div class="Battery">
+    <div class="gridBattery">
+        <img src="res/battery.svg" alt="电池">
+    </div>
+</div>
+<canvas id="myCanvas"></canvas>
+
+</body>
+
+<script>
+    window.onload =function () {
+        let oCanvas = document.getElementById('myCanvas');
+        let aGrid = document.getElementsByClassName('biggerRectangle');
+        let topPictureArray = [];//存顶上大图坐标
+        let batteryArray = [];//存电池的坐标
+        let aTopData = document.getElementsByClassName('topData');//存放顶部图片的数据的数组，用于之后替换后台数据
+        for(let i=0;i<aGrid.length;i++){
+            let x = aGrid[i].offsetWidth*0.5 + aGrid[i].offsetLeft;//电网图的矩形下边中点x坐标
+            let y = aGrid[i].offsetHeight + aGrid[i].offsetTop;
+            let nObj = {x:x,y:y};
+            topPictureArray.push(nObj);
+        }
+        console.log(topPictureArray);
+        let aBattery = document.getElementsByClassName('gridBattery');
+        for(let i=0;i<aBattery.length;i++){
+            let x = aBattery[i].offsetWidth*0.5 + aBattery[i].offsetLeft;//电池的矩形上边中点x坐标
+            let y = aBattery[i].offsetHeight;
+            let nObj = {x:x,y:y};
+            batteryArray.push(nObj);
+        }
+        console.log(batteryArray);
+        if(oCanvas.getContext){
+            let ctx = oCanvas.getContext("2d");
+            ctx.strokeStyle="#0000ff";
+            ctx.beginPath();//画第一个电池的线
+            ctx.moveTo(topPictureArray[0].x, topPictureArray[0].y);
+            ctx.lineTo(topPictureArray[0].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[0].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[0].x, batteryArray[0].y-5);//留出一点空间画圆
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();//画第2个电池的线
+            ctx.moveTo(topPictureArray[0].x, topPictureArray[0].y+50);
+            ctx.lineTo(topPictureArray[1].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[1].x, batteryArray[1].y-5);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();//画第3个电池的线
+            ctx.moveTo(topPictureArray[2].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[2].x, batteryArray[2].y-5);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();//画第4个电池的线
+            ctx.moveTo(topPictureArray[3].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[3].x, batteryArray[3].y-5);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();//画第5个电池的线
+            ctx.moveTo(topPictureArray[4].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[4].x, batteryArray[4].y-5);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();//画第6个电池的线
+            ctx.moveTo(topPictureArray[0].x, topPictureArray[0].y+50);
+            ctx.lineTo(topPictureArray[5].x, topPictureArray[0].y+50);
+            ctx.lineTo(batteryArray[5].x, batteryArray[5].y-5);
+            ctx.stroke();
+            ctx.closePath();
+
+        }
+    }
+</script>
+</html>

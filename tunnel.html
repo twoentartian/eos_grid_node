@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tunnel</title>
+	<script src='lib/vue.js'></script>
+</head>
+<body onunload="pageClose()">
+
+<div id="settingPanelText" style="position: relative;left: auto; top: auto; width: auto; height: auto; font-size: 18px; color: rgba(0,0,0,1); ">
+	<p>
+		用户名字: <input type="text" id="inputName" value="home11"><br>
+		购买传统能源: <input type="text" id="inputFossilEnergyCharged" value="" style="opacity: 10%;color: rgba(0,0,0,1)">
+		<button id="buttonCancel" type="button" onclick="clickEventSendOrder()" style="color: rgba(0,0,0,1); opacity: 10%;">发送指令</button>
+		<br>
+		清洁能源报价: <input type="text" id="inputCleanEnergyPrice" value="" style="opacity: 10%;color: rgba(0,0,0,1)">
+		<button id="buttonConfirm" type="button" onclick="clickEventSendNewPrice()" style="color: rgba(0,0,0,1); opacity: 10%">发送指令</button>
+
+		<!--传统能源剩余: {{fossilEnergyRemain}}<br>-->
+		<!--清洁能源剩余: {{cleanEnergyRemain}}<br>-->
+	</p>
+</div>
+
+<script type="text/javascript">
+	let dataSocket = undefined;
+	function pageClose() {
+		dataSocket.close();
+	}
+	let webSocketAddress = 'ws://127.0.0.1:5556';
+	if ("WebSocket" in window) {
+		dataSocket = new WebSocket(webSocketAddress);
+		dataSocket.onopen = function () {
+
+		};
+		dataSocket.onmessage = function (event) {
+			let obj = JSON.parse(event.data);
+			if (obj.type === 'chargeFossil' || obj.type === 'changePrice' ) {
+				alert(obj.result);
+			}
+		};
+		dataSocket.onclose = function () {
+
+		}
+	}
+	else {
+		alert("Your browser does not support WebSocket");
+	}
+
+
+	function clickEventSendOrder() {
+		let command = {};
+		let fossilEnergyCharged = document.getElementById('inputFossilEnergyCharged').value;
+		let name = document.getElementById('inputName').value;
+		command['type'] = 'chargeFossil';
+		command['content'] = name + ' ' + fossilEnergyCharged;
+		dataSocket.send(JSON.stringify(command));
+	}
+
+	function clickEventSendNewPrice() {
+		let command = {};
+		let cleanEnergyPrice = document.getElementById('inputCleanEnergyPrice').value;
+		let name = document.getElementById('inputName').value;
+		command['type'] = 'changePrice';
+		command['content'] = name + ' ' + cleanEnergyPrice;
+		dataSocket.send(JSON.stringify(command));
+	}
+
+</script>
+
+</body>
+</html>

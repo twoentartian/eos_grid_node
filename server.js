@@ -32,7 +32,15 @@ function createServerHttp(port) {
 
 // Express server
 expressServer.get('/', function (request, response) {
-	response.writeHead(302, {'Location': './mainPage.html'});
+	var deviceAgent = request.headers['user-agent'].toLowerCase();
+	var agentID = deviceAgent.match(/(iphone|ipod|android)/);
+	if (agentID) {
+		response.writeHead(302, {'Location': './phone.html'});
+	}
+	else {
+		response.writeHead(302, {'Location': './mainPage.html'});
+	}
+
 	response.end();
 });
 
