@@ -83,6 +83,7 @@
         letter-spacing: 0;
         font-family: DS-Digital-BoldItalic;
     }
+			wsC
 
     #textEnergyValueTypeWind {
         position: absolute;
@@ -132,8 +133,8 @@
           style="fill:rgba(255,255,255,0.5);border-radius: 2px">
     </rect>
 	<!--Battery 1 level-->
-	<rect width="40" height="70" x="285" y="431" opacity="50%" rx="2" ry="2"
-	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
+	<rect width="40" height="30" x="285" y="471" opacity="50%" rx="2" ry="2"
+	      style="fill:rgba(34,165,247,0.5);border-radius: 2px">
 	</rect>
 	<!--Battery 2 level-->
 	<rect width="40" height="70" x="375" y="431" opacity="50%" rx="2" ry="2"
@@ -144,24 +145,24 @@
 	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
 	</rect>
 	<!--Battery 4 level-->
-	<rect width="40" height="70" x="555" y="431" opacity="50%" rx="2" ry="2"
-	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
+	<rect width="40" height="40" x="555" y="461" opacity="50%" rx="2" ry="2"
+	      style="fill:rgba(34,165,247,0.5);border-radius: 2px">
 	</rect>
 	<!--Battery 5 level-->
-	<rect width="40" height="70" x="645" y="431" opacity="50%" rx="2" ry="2"
-	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
+	<rect width="40" height="50" x="645" y="451" opacity="50%" rx="2" ry="2"
+	      style="fill:rgba(34,165,247,0.5);border-radius: 2px">
 	</rect>
 	<!--Battery 6 level-->
-	<rect width="40" height="70" x="875" y="431" opacity="50%" rx="2" ry="2"
-	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
+	<rect width="40" height="40" x="875" y="461" opacity="50%" rx="2" ry="2"
+	      style="fill:rgba(34,165,247,0.5);border-radius: 2px">s
 	</rect>
 	<!--Battery 7 level-->
 	<rect width="40" height="70" x="965" y="431" opacity="50%" rx="2" ry="2"
 	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
 	</rect>
 	<!--Battery 8 level-->
-	<rect width="40" height="70" x="1195" y="431" opacity="50%" rx="2" ry="2"
-	      style="fill:rgba(255,255,255,0.5);border-radius: 2px">
+	<rect width="40" height="50" x="1195" y="451" opacity="50%" rx="2" ry="2"
+	      style="fill:rgba(34,165,247,0.5);border-radius: 2px">
 	</rect>
 
     <!--Background right-->
@@ -435,26 +436,33 @@
 <img src="res/setting.svg" width="16" height="15" style="position: absolute; left: 1203px; top: 758px; opacity: 60%" onclick="clickEvent4()">
 
 <!--House 1-->
-<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 205px; top: 808px;">
 <img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 165px; top: 907px;">
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 205px; top: 808px;">
 
 <!--House 2-->
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 391px; top: 856px;">
 <img src="res/house.svg" width="160" height="136" style="position: absolute; left: 431px; top: 757px;">
-<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 391px; top: 841px;">
 
 <!--House 3-->
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 585px; top: 936px;">
 <img src="res/house.svg" width="160" height="136" style="position: absolute; left: 625px; top: 837px;">
-<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 585px; top: 950px;">
 
 <!--House 4-->
+<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 802px; top: 856px;">
 <img src="res/house.svg" width="160" height="136" style="position: absolute; left: 842px; top: 757px;">
-<img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 802px; top: 841px;">
 
 <!--House 5-->
-<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 1040px; top: 808px;">
 <img src="res/house_holder_png.png" width="250" height="63" style="position: absolute; left: 1000px; top: 907px;">
+<img src="res/house.svg" width="160" height="136" style="position: absolute; left: 1040px; top: 808px;">
 
-<div id="echart_line" style="width: 390px;height:250px;color: #FFFFFF;position: absolute ;left: 1440px; top: 348px;">
+<!--Power Sign-->
+<img src="res/battery_charge_sign.svg" width="20" height="40" style="position: absolute; left: 295px; top: 446px;opacity: 50%">
+<img src="res/battery_charge_sign.svg" width="20" height="40" style="position: absolute; left: 565px; top: 446px;opacity: 50%">
+<img src="res/battery_charge_sign.svg" width="20" height="40" style="position: absolute; left: 655px; top: 446px;opacity: 50%">
+<img src="res/battery_charge_sign.svg" width="20" height="40" style="position: absolute; left: 885px; top: 446px;opacity: 50%">
+<img src="res/battery_charge_sign.svg" width="20" height="40" style="position: absolute; left: 1205px; top: 446px;opacity: 50%">
+
+<div id="echart_line" style="width: 390px;height:250px;color: #FFFFFF;position: absolute ;left: 1440px; top: 348px;">s
 
 </div>
 
