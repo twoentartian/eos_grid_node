@@ -377,7 +377,12 @@ let CreateServer = function (port) {
 		console.log('Connected');
 		conn.on("text", function (str) {
 			let commandReceived = JSON.parse(str);
-			wsCommandMap[commandReceived.type](conn, commandReceived);
+			try {
+				wsCommandMap[commandReceived.type](conn, commandReceived);
+			}
+			catch (err){
+				console.log('warning, Failed to execute websocket command: ' + commandReceived.type);
+			}
 		});
 		conn.on("close", function (code, reason) {
 			console.log('Closed');
